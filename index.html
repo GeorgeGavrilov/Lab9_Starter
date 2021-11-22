@@ -87,7 +87,18 @@
     </section>
   </main>
 
+
+  <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
   <script>
+    window.TrackJS && TrackJS.install({
+      token: "e49e8789aaa04ad298b0f7f249a5b245"
+      // for more configuration options, see https://docs.trackjs.com
+    });
+  </script>
+
+  <script>
+    TrackJS.track('Testing TrackJS!');
+
     let form = document.querySelector('form');
     form.addEventListener('submit', e => {
       e.preventDefault();
@@ -101,7 +112,110 @@
     let errorBtns = Array.from(document.querySelectorAll('#error-btns > button'));
 
     // Start your code here
-    // You may move this JS to another file if you wish
+    // You may move this JS to another file if you wish (no)
+
+    let errButtons = Array.from(document.querySelectorAll('#error-btns > button'));
+    //console.log(errButtons);
+
+    errButtons[0].addEventListener('click', () => {
+      console.log("Hello! You clicked Console Log button!");
+    })
+    errButtons[1].addEventListener('click', () => {
+      console.error("Oh no! You clicked Console Error button!");
+    })
+    errButtons[2].addEventListener('click', () => {
+      console.count("Counting");
+    })
+    errButtons[3].addEventListener('click', () => {
+      console.warn("Warning!");
+    })
+    errButtons[4].addEventListener('click', () => {
+      const x = 3;
+      const errorMsg = 'the number is not even';
+      console.assert(x % 2 == 0, { number: x, error: errorMsg });
+    })
+    errButtons[5].addEventListener('click', () => {
+      console.clear();
+    })
+    errButtons[6].addEventListener('click', () => {
+      console.dir(document.body);
+    })
+    errButtons[7].addEventListener('click', () => {
+      console.dirxml(document.body);
+    })
+    errButtons[8].addEventListener('click', () => {
+      console.group('Start');
+      console.group('Something else');
+    })
+    errButtons[9].addEventListener('click', () => {
+      console.groupEnd('End');
+    })
+    errButtons[10].addEventListener('click', () => {
+      let info = [
+        {
+          name: "Bob",
+          age: 24
+        },
+        {
+          name: "Alice",
+          age: 20
+        },
+        {
+          name: "Alex",
+          age: 18
+        }
+      ];
+      console.table(info);
+    })
+    errButtons[11].addEventListener('click', () => {
+      console.time();
+    })
+    errButtons[12].addEventListener('click', () => {
+      console.timeEnd();
+    })
+    errButtons[13].addEventListener('click', () => {
+      function bar() {
+        console.trace();
+      }
+      function foo() {
+        bar();
+      }
+      foo();
+      bar();
+    })
+    errButtons[14].addEventListener('click', () => {
+      throw new Error("Throwing global error!");
+    })
+
+    function getRandomInt(max) {
+      return Math.floor(Math.random() * max);
+    }
+
+    try {
+      let x = getRandomInt(100);
+      if (x % 2 == 1) throw new Error("The number is odd, error!");
+    }
+    catch (ex) {
+      console.error(ex);
+    }
+    finally {
+      console.log('Fishished the try/catch block');
+    }
+
+    class My_error extends Error {
+      constructor(message) {
+        super(message);
+        this.name = this.constructor.name;
+      }
+    }
+
+    try {
+      throw new My_error("This custom error will always show up!")
+    }
+    catch (ex) {
+      console.error(ex);
+    }
+
   </script>
 </body>
 
